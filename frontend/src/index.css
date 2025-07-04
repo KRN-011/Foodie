@@ -1,0 +1,66 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+@import "tailwindcss";
+
+
+@theme {
+
+    /** Custom Colors */
+    --color-primary: #E7CCCC;
+    --color-secondary: #EDE8DC;
+    --color-tertiary: #A5B68D;
+    --color-quaternary: #C1CFA1;
+    --color-muted: #808080;
+    --color-dark: #333333;
+    --color-light: #F5F5F5;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-error: #FF0000;
+    --color-success: #00FF00;
+
+    /** Custom Fonts */
+    --font-saira: 'Saira', sans-serif;
+
+    /** Custom Breakpoints */
+    --breakpoint-xs: 425px;
+}
+
+@layer base {
+    html {
+        @apply transition-colors duration-300 flex flex-col flex-1 h-full min-h-screen overflow-y-scroll;
+        height: 100vh;
+    }
+
+    body {
+        @apply flex flex-col flex-1 h-full min-h-screen;
+        height: 100%;
+    }
+
+    #root {
+        @apply flex flex-col flex-1 h-full min-h-screen;
+    }
+}
+
+@layer utilities {
+    .no-double-tap-selection {
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+    }
+}
+
+::selection {
+    background: var(--color-primary);
+    /* or any custom color */
+    color: var(--color-black);
+    /* or any custom color */
+}
+
+::-moz-selection {
+    background: var(--color-primary);
+    color: var(--color-black);
+}
