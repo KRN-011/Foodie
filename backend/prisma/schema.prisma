@@ -1,0 +1,233 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+
+
+
+// ============================================================================================
+// User Model
+// ============================================================================================
+
+
+model User {
+  id                    Int                     @id @default(autoincrement())
+  email                 String                  @unique
+  hashedPassword        String                  
+  role                  Role
+  token                 Token[]
+  address               Address[]
+  orders                Order[]
+  carts                 Cart[]
+  products              Product[]               @relation("ProductRestaurants")
+  restaurantProfile     RestaurantProfile?
+  auditLogs             AuditLog[]
+}
+
+
+model Token {
+  id                    Int                     @id @default(autoincrement())
+  user                  User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                Int
+  token                 String
+  expiresAt             DateTime
+}
+
+
+model Address {
+  id                    Int                     @id @default(autoincrement())
+  user                  User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                Int                     
+  address               String
+  landmark              String?
+  area                  String
+  houseNumber           String?
+  city                  String
+  state                 String
+  country               String
+  postalCode            String?
+  latitude              Float?
+  longitude             Float?
+  orders                Order[]
+  deleted               Boolean                 @default(false)
+}
+
+
+// ============================================================================================
+// Product Models
+// ============================================================================================
+
+
+// Product
+model Product {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  price                 Int
+  description           String
+  ingredients           String[]
+  images                String[]
+  category              Category                @relation(fields: [categoryId], references: [id])
+  categoryId            Int
+  carts                 CartItem[]
+  orders                OrderItem[]
+  createdAt             DateTime                @default(now())
+  status                ProductStatus
+  restaurants           User[]                  @relation("ProductRestaurants")
+  featured              Boolean                 @default(false)
+}
+
+
+// Category
+model Category {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  products              Product[]
+  image                 String
+}
+
+
+// ============================================================================================
+// Cart Models
+// ============================================================================================
+
+
+model Cart {
+  id                    Int                     @id @default(autoincrement())
+  cartItems             CartItem[]               
+  cartTotal             Int
+  createdAt             DateTime                @default(now())
+  user                  User                    @relation(fields: [userId], references: [id])
+  userId                Int
+}
+
+
+model CartItem {
+  id                    Int                     @id @default(autoincrement())
+  cart                  Cart                    @relation(fields: [cartId], references: [id])
+  cartId                Int
+  product               Product                 @relation(fields: [productId], references: [id])
+  productId             Int
+  quantity              Int
+
+  @@unique([cartId, productId])
+}
+
+
+// ============================================================================================
+// Order Models
+// ============================================================================================
+
+
+model Order {
+  id                    Int                     @id @default(autoincrement())
+  orderId               String                  @unique
+  receiverName          String
+  payment               Payment?                @relation(fields: [paymentId], references: [id])
+  paymentId             Int                     @unique
+  items                 OrderItem[]
+  createdAt             DateTime                @default(now())
+  user                  User                    @relation(fields: [userId], references: [id])
+  userId                Int
+  address               Address                 @relation(fields: [addressId], references: [id])
+  addressId             Int
+  status                OrderStatus             @default(PENDING)
+  updatedAt             DateTime                @updatedAt
+}
+
+
+model OrderItem {
+  id                    Int                     @id @default(autoincrement())
+  order                 Order                   @relation(fields: [orderId], references: [id])
+  orderId               Int                            
+  product               Product                 @relation(fields: [productId], references: [id])
+  productId             Int                            
+  quantity              Int                            
+  price                 Int                              
+  createdAt             DateTime                @default(now())
+}
+
+
+model Payment {
+  id                    Int                     @id @default(autoincrement())
+  amount                Int
+  method                PaymentMethod
+  order                 Order?
+  razorpayOrderId       String?
+  razorpayPaymentId     String?
+  razorpaySignature     String?
+}
+
+
+// ============================================================================================
+// restaurant tables
+// ============================================================================================
+
+
+model RestaurantProfile {
+  id          Int    @id @default(autoincrement())
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int    @unique
+  name        String
+  logo        String?
+  description String?
+}
+
+
+// ============================================================================================
+// Admin tables
+// ============================================================================================
+
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  action    AdminActions
+  model     String
+  modelId   Int?
+  details   String?
+  createdAt DateTime @default(now())
+}
+
+
+// ============================================================================================
+// Enum tables
+// ============================================================================================
+
+
+enum Role {
+  USER
+  ADMIN
+  RESTAURANT
+}
+
+enum PaymentMethod {
+  COD
+  PREPAID
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  DELIVERED
+  CANCELLED
+  PAID
+  FAILED
+}
+
+enum AdminActions {
+  CREATED
+  DELETED
+  UPDATED
+}
