@@ -15,21 +15,25 @@ function App() {
 
   return (
     <div className="flex flex-col flex-1 h-full min-h-screen">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route element={<AuthRouteHandler />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/order-confirmed/:orderId" element={<OrderConfirmed />} />
-        </Route>
-      </Routes>
+      <div className='flex flex-col flex-1 bg-[var(--color-secondary)]'>
+        <div className='max-w-11/12 lg:max-w-3/4 w-full mx-auto flex flex-col flex-1'>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route element={<AuthRouteHandler />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/order-confirmed/:orderId" element={<OrderConfirmed />} />
+            </Route>
+          </Routes>
+        </div>
+      </div>
     </div>
   )
 }

@@ -104,16 +104,12 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onEdit, onDelete 
                                             </AnimatePresence>
                                         </td>
                                         <td className="p-2 text-center">
-                                            <span className="px-2 py-1 rounded text-xs font-semibold"
-                                                style={{
-                                                    backgroundColor:
-                                                        product.status === 'ACTIVE'
-                                                            ? 'var(--color-quaternary)'
-                                                            : product.status === 'INACTIVE'
-                                                                ? 'var(--color-muted)'
-                                                                : 'var(--color-error)',
-                                                    color: 'var(--color-white)',
-                                                }}
+                                            <span
+                                                className={`px-2 py-1 rounded text-xs font-semibold 
+                                                    ${product.status === 'ACTIVE' ? 'bg-quaternary text-white' : ''}
+                                                    ${product.status === 'INACTIVE' ? 'bg-muted text-white' : ''}
+                                                    ${product.status === 'INACTIVE' ? 'bg-error text-white' : ''}
+                                                `}
                                             >
                                                 {product.status}
                                             </span>

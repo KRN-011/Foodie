@@ -62,26 +62,24 @@ const RegisterRestaurant = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen flex-col gap-5 px-2" style={{ backgroundColor: 'var(--color-secondary)' }}>
+        <div className="flex items-center justify-center min-h-screen flex-col gap-5 px-2 bg-secondary">
             <motion.form
-                className="p-4 sm:p-8 rounded shadow-md w-full max-w-sm"
-                style={{ backgroundColor: 'var(--color-white)' }}
+                className="p-4 sm:p-8 rounded shadow-md w-full max-w-sm bg-white"
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Register Restaurant</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-dark font-saira">Register Restaurant</h2>
                 <div className="mb-4">
-                    <label htmlFor="name" className="block mb-2" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Restaurant Name:</label>
+                    <label htmlFor="name" className="block mb-2 text-dark font-saira">Restaurant Name:</label>
                     <input
                         type="text"
                         id="name"
                         {...register('name', { required: 'Name is required' })}
-                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2"
-                        style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)' }}
+                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 border-tertiary font-saira bg-light"
                     />
-                    {errors.name && <p className="text-red-500 text-sm mt-1" style={{ color: 'var(--color-error)' }}>{errors.name.message as string}</p>}
+                    {errors.name && <p className="text-error text-sm mt-1">{errors.name.message as string}</p>}
                 </div>
                 <div className="mb-4">
                     <label htmlFor="description" className="block mb-2" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Description:</label>
@@ -105,28 +103,26 @@ const RegisterRestaurant = () => {
                     {logoError && <span className="text-[var(--color-error)] text-xs mt-1 block">{logoError}</span>}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block mb-2" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Email:</label>
+                    <label htmlFor="email" className="block mb-2 text-dark font-saira">Email:</label>
                     <input
                         type="email"
                         id="email"
                         {...register('email', { required: 'Email is required' })}
-                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2"
-                        style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)' }}
+                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 border-tertiary font-saira bg-light"
                     />
-                    {errors.email && <p className="text-red-500 text-sm mt-1" style={{ color: 'var(--color-error)' }}>{errors.email.message as string}</p>}
+                    {errors.email && <p className="text-error text-sm mt-1">{errors.email.message as string}</p>}
                 </div>
                 <div className="mb-6">
-                    <label htmlFor="password" className="block mb-2" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Password:</label>
+                    <label htmlFor="password" className="block mb-2 text-dark font-saira">Password:</label>
                     <input
                         type="password"
                         id="password"
                         {...register('password', { required: 'Password is required' })}
-                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2"
-                        style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)' }}
+                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 border-tertiary font-saira bg-light"
                     />
-                    {errors.password && <p className="text-red-500 text-sm mt-1" style={{ color: 'var(--color-error)' }}>{errors.password.message as string}</p>}
+                    {errors.password && <p className="text-error text-sm mt-1">{errors.password.message as string}</p>}
                 </div>
-                <button type="submit" className="w-full py-2 rounded font-semibold cursor-pointer transition-colors" style={{ backgroundColor: 'var(--color-tertiary)', color: 'var(--color-white)', fontFamily: 'var(--font-saira)' }}>Register</button>
+                <button type="submit" className="w-full py-2 rounded font-semibold cursor-pointer transition-colors bg-tertiary text-white font-saira">Register</button>
                 <div className="flex items-center justify-center mt-5">
                     <p className="text-sm text-center" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Already have an account? <Link to="/login" className="text-dark relative before:content-[''] before:absolute before:w-0 before:h-[1px] before:bg-dark before:left-0 before:bottom-0 before:transition-all before:duration-300 before:ease-in-out hover:before:w-full">Login</Link></p>
                 </div>

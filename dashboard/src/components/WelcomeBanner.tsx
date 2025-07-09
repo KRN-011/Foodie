@@ -18,13 +18,13 @@ const WelcomeBanner = ({ user }: WelcomeBannerProps) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 40 }}
         transition={{ duration: 0.7, type: 'spring' }}
-        className="w-full bg-[var(--color-primary)] rounded-b-2xl shadow-md p-6 flex flex-col items-center justify-center mb-4"
+        className="w-full bg-primary rounded-b-2xl shadow-md p-6 flex flex-col items-center justify-center mb-4"
       >
-        <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-dark)] mb-2 font-saira">
-          Welcome, <span className="text-[var(--color-tertiary)]">{user.name}</span>!
+        <h1 className="text-2xl md:text-3xl font-bold text-dark mb-2 font-saira">
+          Welcome, <span className="text-tertiary">{user.name}</span>!
         </h1>
-        <p className="text-[var(--color-muted)] text-base md:text-lg font-medium">
-          You are logged in as <span className="text-[var(--color-quaternary)]">{roleText[user.role]}</span>
+        <p className="text-muted text-base md:text-lg font-medium">
+          You are logged in as <span className="text-quaternary">{roleText[user.role]}</span>
         </p>
       </motion.div>
     </AnimatePresence>

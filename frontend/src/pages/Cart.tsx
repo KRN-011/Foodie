@@ -110,7 +110,7 @@ const Cart = () => {
     }
 
     return (
-        <div className="flex-1 flex flex-col w-full items-center justify-center bg-[var(--color-secondary)] px-2">
+        <div className="flex-1 flex flex-col w-full items-center justify-center px-2">
             {cart?.length === 0 ? (
                 <motion.div
                     className="flex flex-col items-center justify-center text-center"

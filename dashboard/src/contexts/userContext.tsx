@@ -36,14 +36,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const initializeUser = async () => {
             setIsLoading(true);
             try {
-                const token = Cookies.get("token");
+                const token = Cookies.get("dashboardToken");
                 if (token) {
                     const response = await getUser();
                     setUser(response.user);
                     setIsAuthenticated(true);
                     setIsAdmin(response.user.role === "ADMIN");
                     setIsRestaurant(response.user.role === "RESTAURANT");
-                    Cookies.set('user', JSON.stringify(response.user));
+                    Cookies.set('dashboardUser', JSON.stringify(response.user));
                 }
             } catch (error) {
                 setUser(null);
@@ -69,8 +69,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                 setIsAdmin(response.user.role === "ADMIN");
                 setIsRestaurant(response.user.role === "RESTAURANT");
                 toast.success(response.message);
-                Cookies.set('token', response.token);
-                Cookies.set('user', JSON.stringify(response.user));
+                Cookies.set('dashboardToken', response.token);
+                Cookies.set('dashboardUser', JSON.stringify(response.user));
             }
         } catch (error: any) {
             toast.error(error.response.data.message);
@@ -91,8 +91,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                 setIsAdmin(false);
                 setIsRestaurant(false);
                 toast.success(response.message);
-                Cookies.remove('token');
-                Cookies.remove('user');
+                Cookies.remove('dashboardToken');
+                Cookies.remove('dashboardUser');
             }
         } catch (error) {
             console.error("Error logging out:", error);

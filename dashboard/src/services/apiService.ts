@@ -267,3 +267,15 @@ export const getOrdersByRestaurantId = async (restaurantId: string) => {
         throw error;
     }
 }
+
+
+// update order status
+export const updateOrderStatus = async (orderId: string, status: string) => {
+    try {
+        const response = await api.put(`${API_BASE_URL}/order/update-order-status/${orderId}`, { status: status });
+        return response.data;
+    } catch (error) {
+        console.error("Error updating order status:", error);
+        throw error;
+    }
+}

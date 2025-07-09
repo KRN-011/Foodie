@@ -1,0 +1,12 @@
+{
+  "name": "foodie",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start:all" : "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\" \"npm --prefix dashboard run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

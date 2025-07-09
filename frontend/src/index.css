@@ -51,6 +51,20 @@
         -ms-user-select: none;
         -moz-user-select: none;
     }
+
+    .no-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .custom-scrollbar {
+        scrollbar-width: auto;
+        scrollbar-color: var(--color-tertiary) var(--color-white);
+        scrollbar-gutter: stable;
+    }
 }
 
 ::selection {

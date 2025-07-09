@@ -149,22 +149,22 @@ const Products = () => {
                         exit={{ opacity: 0 }}
                     >
                         <motion.div
-                            className="bg-[var(--color-white)] rounded-xl shadow-lg p-6 w-full max-w-xs flex flex-col gap-4 relative"
+                            className="bg-white rounded-xl shadow-lg p-6 w-full max-w-xs flex flex-col gap-4 relative"
                             initial={{ scale: 0.9, y: 40 }}
                             animate={{ scale: 1, y: 0 }}
                             exit={{ scale: 0.9, y: 40 }}
                             transition={{ type: 'spring', duration: 0.3 }}
                         >
-                            <h3 className="text-lg font-bold mb-2 text-[var(--color-dark)]">Delete Product?</h3>
-                            <p className="text-[var(--color-muted)]">Are you sure you want to delete this product? This action cannot be undone.</p>
+                            <h3 className="text-lg font-bold mb-2 text-dark">Delete Product?</h3>
+                            <p className="text-muted">Are you sure you want to delete this product? This action cannot be undone.</p>
                             <div className="flex gap-2 mt-4">
                                 <button
-                                    className="flex-1 py-2 rounded bg-[var(--color-muted)] text-white font-semibold cursor-pointer"
+                                    className="flex-1 py-2 rounded bg-muted text-white font-semibold cursor-pointer"
                                     onClick={() => setDeleteProductId(null)}
                                     disabled={deleting}
                                 >Cancel</button>
                                 <button
-                                    className="flex-1 py-2 rounded bg-[var(--color-error)] text-white font-semibold cursor-pointer"
+                                    className="flex-1 py-2 rounded bg-error text-white font-semibold cursor-pointer"
                                     onClick={confirmDelete}
                                     disabled={deleting}
                                 >{deleting ? 'Deleting...' : 'Delete'}</button>

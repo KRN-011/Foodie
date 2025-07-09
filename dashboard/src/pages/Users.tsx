@@ -34,13 +34,13 @@ function CustomDropdown({ label, value, onChange, options, placeholder = 'Select
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
-                        className="absolute left-0 right-0 z-40 bg-[var(--color-white)] border border-[var(--color-light)] rounded shadow-lg mt-1 max-h-48 overflow-y-auto"
+                        className="absolute left-0 right-0 z-40 bg-white border border-light rounded shadow-lg mt-1 max-h-48 overflow-y-auto"
                     >
                         <div className="flex flex-col gap-1 p-2">
                             {options.map((opt: any) => (
                                 <button
                                     key={opt.value}
-                                    className={`text-left px-2 py-1 rounded hover:bg-[var(--color-tertiary)] hover:text-[var(--color-white)] transition-colors ${value === opt.value ? 'font-bold text-[var(--color-tertiary)]' : ''}`}
+                                    className={`text-left px-2 py-1 rounded hover:bg-tertiary hover:text-white transition-colors ${value === opt.value ? 'font-bold text-tertiary' : ''}`}
                                     onClick={() => { onChange(opt.value); setOpen(false); }}
                                     style={{ fontFamily: 'var(--font-saira)' }}
                                     type="button"
@@ -52,7 +52,7 @@ function CustomDropdown({ label, value, onChange, options, placeholder = 'Select
                     </motion.div>
                 )}
             </AnimatePresence>
-            {error && <span className="text-[var(--color-error)] text-xs mt-1 block">{error}</span>}
+            {error && <span className="text-error text-xs mt-1 block">{error}</span>}
         </div>
     );
 }
@@ -148,9 +148,9 @@ const Users = () => {
         >
             {/* Title & Filter */}
             <div className="flex flex-col sm:flex-row items-center justify-between mb-4 gap-2 w-full">
-                <h1 className="text-2xl font-bold text-[var(--color-dark)]">Users</h1>
+                <h1 className="text-2xl font-bold text-dark">Users</h1>
                 <button
-                    className="flex items-center gap-2 px-4 py-2 rounded bg-[var(--color-tertiary)] text-white font-semibold shadow hover:bg-[var(--color-quaternary)] transition cursor-pointer"
+                    className="flex items-center gap-2 px-4 py-2 rounded bg-tertiary text-white font-semibold shadow hover:bg-quaternary transition cursor-pointer"
                     onClick={() => setFilterOpen(true)}
                 >
                     <FaFilter />
@@ -168,18 +168,17 @@ const Users = () => {
                         exit={{ opacity: 0 }}
                     >
                         <motion.div
-                            className="bg-[var(--color-white)] rounded-lg shadow-lg p-6 w-[90vw] max-w-xs flex flex-col gap-4"
+                            className="bg-white rounded-lg shadow-lg p-6 w-[90vw] max-w-xs flex flex-col gap-4"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
                             transition={{ type: 'spring', duration: 0.3 }}
                         >
-                            <h2 className="text-lg font-semibold mb-2 text-[var(--color-dark)]">Filter Users</h2>
+                            <h2 className="text-lg font-semibold mb-2 text-dark">Filter Users</h2>
                             <div className="flex flex-col gap-2">
-                                <label className="text-sm text-[var(--color-dark)]">Role</label>
+                                <label className="text-sm text-dark">Role</label>
                                 <select
-                                    className="px-3 py-2 rounded border focus:outline-none focus:ring-2 text-sm"
-                                    style={{ borderColor: 'var(--color-tertiary)', background: 'var(--color-light)', color: 'var(--color-dark)' }}
+                                    className="px-3 py-2 rounded border focus:outline-none focus:ring-2 text-sm border-tertiary bg-light text-dark"
                                     value={roleFilter}
                                     onChange={e => setRoleFilter(e.target.value)}
                                 >
@@ -190,11 +189,11 @@ const Users = () => {
                             </div>
                             <div className="flex gap-2 mt-4">
                                 <button
-                                    className="flex-1 px-4 py-2 rounded bg-[var(--color-tertiary)] text-white font-semibold hover:bg-[var(--color-quaternary)] transition"
+                                    className="flex-1 px-4 py-2 rounded bg-tertiary text-white font-semibold hover:bg-quaternary transition"
                                     onClick={handleFilterSave}
                                 >Save</button>
                                 <button
-                                    className="flex-1 px-4 py-2 rounded bg-[var(--color-muted)] text-white font-semibold hover:bg-[var(--color-dark)] transition"
+                                    className="flex-1 px-4 py-2 rounded bg-muted text-white font-semibold hover:bg-dark transition"
                                     onClick={handleFilterReset}
                                 >Reset</button>
                             </div>
@@ -204,7 +203,7 @@ const Users = () => {
             </AnimatePresence>
 
             {/* Users Table */}
-            <div className="w-full relative h-full flex-1 flex flex-col border border-[var(--color-tertiary)] rounded-lg bg-[var(--color-white)] overflow-x-auto no-scrollbar">
+            <div className="w-full relative h-full flex-1 flex flex-col border border-tertiary rounded-lg bg-white overflow-x-auto no-scrollbar">
                 {loading ? (
                     <div className="flex-1 flex items-center justify-center text-[var(--color-muted)]">Loading...</div>
                 ) : (
@@ -225,13 +224,13 @@ const Users = () => {
                                     <td className="p-2 text-center">{user.role}</td>
                                     <td className="p-2 text-center flex gap-2 justify-center">
                                         <button
-                                            className="p-2 rounded bg-[var(--color-tertiary)] text-white hover:bg-[var(--color-quaternary)] transition"
+                                            className="p-2 rounded bg-tertiary text-white hover:bg-quaternary transition"
                                             onClick={() => openEditModal(user)}
                                         >
                                             <FaEdit />
                                         </button>
                                         <button
-                                            className="p-2 rounded bg-[var(--color-error)] text-white hover:bg-[var(--color-dark)] transition"
+                                            className="p-2 rounded bg-error text-white hover:bg-dark transition"
                                             onClick={() => openDeleteModal(user)}
                                         >
                                             <FaTrash />
@@ -258,25 +257,24 @@ const Users = () => {
                         exit={{ opacity: 0 }}
                     >
                         <motion.div
-                            className="bg-[var(--color-white)] rounded-lg shadow-lg p-6 w-[90vw] max-w-xs flex flex-col gap-4"
+                            className="bg-white rounded-lg shadow-lg p-6 w-[90vw] max-w-xs flex flex-col gap-4"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
                             transition={{ type: 'spring', duration: 0.3 }}
                         >
-                            <h2 className="text-lg font-semibold mb-2 text-[var(--color-dark)]">Edit User</h2>
+                            <h2 className="text-lg font-semibold mb-2 text-dark">Edit User</h2>
                             <div className="flex flex-col gap-2">
-                                <label className="text-sm text-[var(--color-dark)]">Email</label>
+                                <label className="text-sm text-dark">Email</label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={editData.email || ''}
                                     onChange={handleEditChange}
-                                    className="px-3 py-2 rounded border focus:outline-none focus:ring-2 text-sm"
-                                    style={{ borderColor: 'var(--color-tertiary)', background: 'var(--color-light)', color: 'var(--color-dark)' }}
+                                    className="px-3 py-2 rounded border focus:outline-none focus:ring-2 text-sm border-tertiary bg-light text-dark"
                                     disabled
                                 />
-                                <label className="text-sm text-[var(--color-dark)]">Role</label>
+                                <label className="text-sm text-dark">Role</label>
                                 <CustomDropdown
                                     label=""
                                     value={editData.role || ''}
@@ -287,12 +285,12 @@ const Users = () => {
                             </div>
                             <div className="flex gap-2 mt-4">
                                 <button
-                                    className="flex-1 px-4 py-2 rounded bg-[var(--color-tertiary)] text-white font-semibold hover:bg-[var(--color-quaternary)] transition"
+                                    className="flex-1 px-4 py-2 rounded bg-tertiary text-white font-semibold hover:bg-quaternary transition"
                                     onClick={handleUpdateUser}
                                     disabled={saving}
                                 >{saving ? 'Updating...' : 'Update'}</button>
                                 <button
-                                    className="flex-1 px-4 py-2 rounded bg-[var(--color-muted)] text-white font-semibold hover:bg-[var(--color-dark)] transition"
+                                    className="flex-1 px-4 py-2 rounded bg-muted text-white font-semibold hover:bg-dark transition"
                                     onClick={closeEditModal}
                                     disabled={saving}
                                 >Cancel</button>
@@ -312,22 +310,22 @@ const Users = () => {
                         exit={{ opacity: 0 }}
                     >
                         <motion.div
-                            className="bg-[var(--color-white)] rounded-lg shadow-lg p-6 w-[90vw] max-w-xs flex flex-col gap-4"
+                            className="bg-white rounded-lg shadow-lg p-6 w-[90vw] max-w-xs flex flex-col gap-4"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
                             transition={{ type: 'spring', duration: 0.3 }}
                         >
-                            <h2 className="text-lg font-semibold mb-2 text-[var(--color-dark)]">Delete User</h2>
-                            <p className="text-[var(--color-dark)]">Are you sure you want to delete <span className="font-bold">{deleteModal.user?.email}</span>?</p>
+                            <h2 className="text-lg font-semibold mb-2 text-dark">Delete User</h2>
+                            <p className="text-dark">Are you sure you want to delete <span className="font-bold">{deleteModal.user?.email}</span>?</p>
                             <div className="flex gap-2 mt-4">
                                 <button
-                                    className="flex-1 px-4 py-2 rounded bg-[var(--color-error)] text-white font-semibold hover:bg-[var(--color-dark)] transition"
+                                    className="flex-1 px-4 py-2 rounded bg-error text-white font-semibold hover:bg-dark transition"
                                     onClick={handleDeleteUser}
                                     disabled={deleting}
                                 >{deleting ? 'Deleting...' : 'Delete'}</button>
                                 <button
-                                    className="flex-1 px-4 py-2 rounded bg-[var(--color-muted)] text-white font-semibold hover:bg-[var(--color-dark)] transition"
+                                    className="flex-1 px-4 py-2 rounded bg-muted text-white font-semibold hover:bg-dark transition"
                                     onClick={closeDeleteModal}
                                     disabled={deleting}
                                 >Cancel</button>

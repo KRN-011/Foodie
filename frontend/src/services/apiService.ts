@@ -170,6 +170,17 @@ export const getAllAddresses = async () => {
     }
 }
 
+// get all addresses include deleted
+export const getAllAddressesIncludeDeleted = async () => {
+    try {
+        const response = await api.get(`${API_BASE_URL}/address/all-include-deleted`);
+        return response.data;
+    } catch (error) {
+        console.error("Error getting all addresses include deleted:", error);
+        throw error;
+    }
+}
+
 // update address
 export const updateAddress = async (addressId: number, addressData: any) => {
     try {
@@ -254,6 +265,8 @@ export const getOrderById = async (orderId: string) => {
         throw error;
     }
 }
+
+
 
 // ===========================================================
 // Miscellaneous API

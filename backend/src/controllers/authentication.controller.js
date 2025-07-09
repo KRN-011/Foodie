@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 // register user
 export const registerUser = async (req, res) => {
     try {
-        const { email, password, role } = req.body;
+        const { email, password, role = "USER" } = req.body;
 
         // check if user already exists
         const existingUser = await prisma.user.findUnique({

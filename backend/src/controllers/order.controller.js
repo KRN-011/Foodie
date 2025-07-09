@@ -2,10 +2,16 @@ import prisma from '../lib/prismaClient.js';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+let razorpay;
+function getRazorpayInstance() {
+    if (!razorpay) {
+        razorpay = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET,
+        });
+    }
+    return razorpay;
+}
 
 // create razorpay order
 export const createRazorpayOrder = async (req, res) => {
@@ -17,6 +23,8 @@ export const createRazorpayOrder = async (req, res) => {
             currency: 'INR',
             receipt: `foodie_order_${Date.now()}`,
         };
+
+        const razorpay = getRazorpayInstance();
 
         const order = await razorpay.orders.create(options);
         res.json({
@@ -224,6 +232,50 @@ export const getOrderById = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Failed to fetch order',
+            error: error.message,
+        });
+    }
+}
+
+// update order status
+export const updateOrderStatus = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { status } = req.body;
+
+        const io = req.app.get('io');
+
+        if (!status) {
+            return res.status(400).json({
+                success: false,
+                message: 'Status is required',
+            });
+        }
+
+        const order = await prisma.order.update({
+            where: {
+                orderId
+            },
+            data: {
+                status
+            }
+        })
+
+        io.emit('orderStatusUpdated', {
+            orderId,
+            newStatus: status
+        })
+
+        res.status(200).json({
+            success: true,
+            order,
+            message: 'Order status updated successfully',
+        });
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to update order status',
             error: error.message,
         });
     }

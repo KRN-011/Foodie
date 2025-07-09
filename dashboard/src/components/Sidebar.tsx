@@ -60,7 +60,7 @@ const Sidebar = () => {
                     transition={{ duration: 0.2 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className='flex items-center gap-3 py-2 px-3 rounded transition-colors text-base font-medium bg-[var(--color-light)] text-[var(--color-error)] cursor-pointer' onClick={() => handleLogout()}>
+                    className='flex items-center gap-3 py-2 px-3 rounded transition-colors text-base font-medium bg-light text-error cursor-pointer' onClick={() => handleLogout()}>
                     <IoMdExit size={20} />
                     Logout
                 </motion.button>
@@ -76,8 +76,7 @@ const Sidebar = () => {
         <>
             {/* Hamburger for mobile */}
             <button
-                className="fixed top-6 left-6 z-50 md:hidden p-2 rounded focus:outline-none"
-                style={{ backgroundColor: 'var(--color-tertiary)', color: 'var(--color-white)' }}
+                className="fixed top-6 left-6 z-50 md:hidden p-2 rounded focus:outline-none bg-tertiary text-white"
                 onClick={() => setOpen(o => !o)}
                 aria-label={open ? 'Close sidebar' : 'Open sidebar'}
             >
@@ -164,7 +163,7 @@ const Sidebar = () => {
                             transition={{ duration: 0.2 }}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className='flex items-center gap-3 py-2 px-3 rounded transition-colors text-base font-medium bg-[var(--color-light)] text-[var(--color-error)] cursor-pointer' onClick={() => handleLogout()}>
+                            className='flex items-center gap-3 py-2 px-3 rounded transition-colors text-base font-medium bg-light text-error cursor-pointer' onClick={() => handleLogout()}>
                             <IoMdExit size={20} />
                             Logout
                         </motion.button>

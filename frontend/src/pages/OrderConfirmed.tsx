@@ -9,7 +9,7 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import { getOrderById } from '../services/apiService';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-// Store location (example: Ahmedabad)
+// Store location 
 const STORE_LOCATION = { lat: 23.130136211382286, lng: 72.55088920735426 };
 
 function Routing({ from, to }: { from: { lat: number; lng: number }, to: { lat: number; lng: number } }) {

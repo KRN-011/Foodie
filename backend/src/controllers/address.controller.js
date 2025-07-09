@@ -62,6 +62,30 @@ export const getAllAddresses = async (req, res) => {
     }
 };
 
+// get all addresses include deleted
+export const getAllAddressesIncludeDeleted = async (req, res) => {    
+    try {
+        const { id } = req.user;
+
+        const addresses = await prisma.address.findMany({
+            where: { userId: id },
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Addresses fetched successfully',
+            addresses,
+        });
+    } catch (error) {
+        console.error('Error getting all addresses:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to get all addresses',
+            error: error.message,
+        });
+    }
+};
+
 // update address
 export const updateAddress = async (req, res) => {
     try {

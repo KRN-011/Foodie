@@ -5,6 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Pool } from "pg";
 
+// environment variables
+dotenv.config();
+
 // router imports
 import authenticationRoutes from "./routers/authentication.routes.js";
 import productRoutes from "./routers/product.routes.js";
@@ -19,8 +22,7 @@ import devRoutes from "./routers/dev.routes.js";
 
 
 
-// environment variables
-dotenv.config();
+
 
 // database connection
 const pool = new Pool({

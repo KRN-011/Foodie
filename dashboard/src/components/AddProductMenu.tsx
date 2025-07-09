@@ -371,7 +371,7 @@ const AddProductMenu = ({ open, onClose, onSave, categories, restaurants, refetc
                     )}
                     {/* Main Product Form */}
                     <motion.form
-                        className="bg-[var(--color-white)] max-h-[90vh] overflow-y-auto no-scrollbar rounded-xl shadow-lg p-6 w-full max-w-md mx-2 flex flex-col gap-4 relative"
+                        className="bg-white max-h-[90vh] overflow-y-auto no-scrollbar rounded-xl shadow-lg p-6 w-full max-w-md mx-2 flex flex-col gap-4 relative"
                         initial={{ scale: 0.9, y: 40 }}
                         animate={{ scale: 1, y: 0 }}
                         exit={{ scale: 0.9, y: 40 }}
@@ -388,8 +388,7 @@ const AddProductMenu = ({ open, onClose, onSave, categories, restaurants, refetc
                                 value={form.name}
                                 onChange={handleInput}
                                 placeholder="Name"
-                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 text-sm"
-                                style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)', color: 'var(--color-dark)' }}
+                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 text-sm border-tertiary bg-light text-dark"
                             />
                             {errors.name && <span className="text-[var(--color-error)] text-xs mt-1 block">{errors.name}</span>}
                         </div>
@@ -401,8 +400,7 @@ const AddProductMenu = ({ open, onClose, onSave, categories, restaurants, refetc
                                 onChange={handleInput}
                                 placeholder="Price"
                                 type="number"
-                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 text-sm"
-                                style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)', color: 'var(--color-dark)' }}
+                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 text-sm border-tertiary bg-light text-dark"
                             />
                             {errors.price && <span className="text-[var(--color-error)] text-xs mt-1 block">{errors.price}</span>}
                         </div>
@@ -413,8 +411,7 @@ const AddProductMenu = ({ open, onClose, onSave, categories, restaurants, refetc
                                 value={form.description}
                                 onChange={handleInput}
                                 placeholder="Description"
-                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 text-sm"
-                                style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)', color: 'var(--color-dark)' }}
+                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 text-sm border-tertiary bg-light text-dark"
                             />
                             {errors.description && <span className="text-[var(--color-error)] text-xs mt-1 block">{errors.description}</span>}
                         </div>

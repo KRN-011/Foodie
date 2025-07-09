@@ -428,7 +428,7 @@ const Menu = () => {
                                         initial={{ opacity: 0, width: 0 }}
                                         animate={{ opacity: 1, width: '100%' }}
                                         exit={{ opacity: 0, width: 0 }}
-                                        transition={{ duration: 0.2, ease: 'easeOut', opacity: { delay: 0, duration: 0.2 }, width: { delay: 0, duration: 0.2 }, maxWidth: { delay: 0, duration: 0.2 } }}
+                                        transition={{ duration: 0.2, ease: 'easeOut', opacity: { delay: 0, duration: 0.2 }, width: { delay: 0, duration: 0.2 }}}
                                         className="z-30 w-full bg-[var(--color-white)] rounded-xl shadow-lg flex flex-col border border-[var(--color-light)] overflow-hidden"
                                     >
                                         <input
@@ -477,13 +477,13 @@ const Menu = () => {
                 </div>
             ) : (
                 <FadeInView>
-                    <div className="flex flex-col gap-8 mx-4">
+                    <div className="flex flex-col gap-8">
                         {/* If no category selected, show all categories vertically */}
                         {!selectedCategory && !search && !filters.priceMin && !filters.priceMax && !filters.rating && !filters.ingredient && !filters.featured ? (
                             categories.map(cat => (
                                 <div key={cat} className="mb-4">
                                     <h3 className="text-lg md:text-xl font-bold mb-2 text-[var(--color-tertiary)] z-0" style={{ fontFamily: 'var(--font-saira)' }}>{cat}</h3>
-                                    <div className="flex gap-4 overflow-x-auto pb-2 z-0">
+                                    <div className="flex gap-4 overflow-x-auto pb-2 z-0 custom-scrollbar">
                                         {groupedByCategory[cat]?.map((item, index) => (
                                             <motion.div
                                                 key={item.id}

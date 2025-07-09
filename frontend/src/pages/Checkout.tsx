@@ -7,6 +7,7 @@ import { FaTrash } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/cartContext';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { useOrder } from '../contexts/orderContext';
 
 declare global {
     interface Window {
@@ -43,6 +44,7 @@ const sectionVariants = {
 const Checkout = () => {
     const { isAuthenticated, isLoading, user } = useUser();
     const { refreshCart } = useCart();
+    const { refreshOrders } = useOrder();
     const [cart, setCart] = useState<any[]>([]);
     const [selectedAddress, setSelectedAddress] = useState<number>(0);
     const [showAddressModal, setShowAddressModal] = useState(false);
@@ -210,7 +212,7 @@ const Checkout = () => {
                                     price: item.product.price,
                                 })),
                                 paymentMethod: 'PREPAID',
-                                status: 'PAID',
+                                status: 'CONFIRMED',
                                 addressId: addresses[selectedAddress].id,
                                 amount: total,
                                 razorpayOrderId: response.razorpay_order_id,
@@ -221,6 +223,7 @@ const Checkout = () => {
                             try {
                                 await createOrder(orderData);
                                 refreshCart();
+                                refreshOrders();
                                 setPaying(false);
                                 navigate(`/order-confirmed/${orderData.orderId}`);
                             } catch (e) {

@@ -9,7 +9,7 @@ interface ProtectedRoutesProps {
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ requiredRole }) => {
     const { isAuthenticated, user, isLoading } = useUser();
 
-    const token = Cookies.get('token');
+    const token = Cookies.get('dashboardToken');
 
     if (isLoading) {
         return <div>Loading...</div>

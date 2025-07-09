@@ -5,7 +5,7 @@ import FeaturedFoodScroll from '../components/Home/FeaturedFoodScroll';
 const Home = () => {
     
     return (
-        <div className='flex flex-col flex-1 bg-[var(--color-secondary)]'>
+        <div className='flex flex-col flex-1'>
             <div className="font-sans flex flex-col flex-1 ">
                 {/* Category Bar */}
                 {/* <CategoryScroll /> */}

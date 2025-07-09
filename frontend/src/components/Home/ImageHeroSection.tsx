@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
-import React from 'react'
+import FadeInView from '../FadeInView'
 
 const ImageHeroSection = () => {
     return (
-        <div className="relative w-full h-[90vh] flex items-center justify-center my-4">
+        <FadeInView>
+            <div className="relative w-full h-[80vh] flex items-center justify-center rounded-3xl overflow-hidden">
             <img
                 src="/images/hero/restaurant-hero.jpg"
                 alt="Hero"
@@ -23,6 +24,7 @@ const ImageHeroSection = () => {
                 </p>
             </motion.div>
         </div>
+        </FadeInView>
     )
 }
 
