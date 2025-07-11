@@ -279,3 +279,21 @@ export const updateOrderStatus = async (orderId: string, status: string) => {
         throw error;
     }
 }
+
+
+
+// ===========================================================
+// Combined API
+// ===========================================================
+
+
+// get top states
+export const getTopStates = async () => {
+    try {
+        const response = await api.get(`${API_BASE_URL}/combined/top-states`);
+        return response.data;
+    } catch (error) {
+        console.error("Error getting top states:", error);
+        throw error;
+    }
+}

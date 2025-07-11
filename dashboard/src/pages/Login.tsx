@@ -1,18 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '../contexts/userContext';
 import { useForm } from 'react-hook-form';
+import MobileLoginForm from '../components/Login/MobileLoginForm';
 
 const Login = () => {
-
     // login from user context
     const { login } = useUser();
-
     const [role, setRole] = useState<'ADMIN' | 'RESTAURANT'>('ADMIN');
-    const [form, setForm] = useState({
-        email: '',
-        password: ''
-    })
 
     // handle role change
     const handleRoleChange = (role: 'ADMIN' | 'RESTAURANT') => {
@@ -21,11 +16,15 @@ const Login = () => {
 
     // react-hook-form form state
     const { register, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: form
+        defaultValues: {
+            email: '',
+            password: ''
+        }
     });
 
     // handle login
-    const handleLogin = async (data: any) => {
+    const onSubmit = async (data: any) => {
+        console.log('Login form rendered:', data);
         const newData = {
             ...data,
             role: role
@@ -39,147 +38,10 @@ const Login = () => {
 
     return (
         <div className="flex z-0 flex-1 flex-col items-center justify-center bg-secondary px-5">
-
             {/* mobile login */}
-            <motion.div
-                initial={{
-                    backgroundColor: '#A5B68D'
-                }}
-                animate={{
-                    backgroundColor: role === 'ADMIN' ? '#A5B68D' : '#ffffff'
-                }}
-                transition={{
-                    duration: 0.3
-                }}
-                className='relative w-full max-w-lg h-full max-h-[58vh] flex flex-col items-center rounded-3xl md:hidden'>
-                <AnimatePresence>
-                    {
-                        role !== 'ADMIN' && (
-                            <motion.div
-                                key='admin'
-                                initial={{
-                                    height: 0
-                                }}
-                                animate={{
-                                    height: 40
-                                }}
-                                exit={{
-                                    height: 0
-                                }}
-                                transition={{
-                                    duration: 0.3
-                                }}
-                                className='absolute z-10 bottom-[100%] flex flex-col items-center justify-center text-white font-bold text-lg bg-tertiary w-full max-w-3/4 rounded-t-3xl' onClick={() => handleRoleChange('ADMIN')}
-                            >
-                                <motion.div
-                                    initial={{
-                                        opacity: 0
-                                    }}
-                                    animate={role === 'RESTAURANT' ? {
-                                        opacity: 1
-                                    } : {
-                                        opacity: 0
-                                    }}
-                                    exit={{
-                                        opacity: 0,
-                                        transition: {
-                                            delay: 0
-                                        }
-                                    }}
-                                    transition={{
-                                        delay: 0.2
-                                    }}
-                                >Log in as Admin</motion.div>
-                            </motion.div>
-                        )
-                    }
-                    {
-                        role !== 'RESTAURANT' && (
-                            <motion.div
-                                key='restaurant'
-                                initial={{
-                                    height: 0
+            <MobileLoginForm />
 
-                                }}
-                                animate={{
-                                    height: 40
-                                }}
-                                exit={{
-                                    height: 0
-                                }}
-                                transition={{
-                                    duration: 0.3
-                                }}
-                                className='absolute top-[100%] flex flex-col items-center justify-center text-tertiary font-bold text-lg bg-white w-full max-w-3/4 rounded-b-3xl' onClick={() => handleRoleChange('RESTAURANT')}
-                            >
-                                <motion.div
-                                    initial={{
-                                        opacity: 0
-                                    }}
-                                    animate={role === 'ADMIN' ? {
-                                        opacity: 1
-                                    } : {
-                                        opacity: 0
-                                    }}
-                                    exit={{
-                                        opacity: 0,
-                                        transition: {
-                                            delay: 0
-                                        }
-                                    }}
-                                    transition={{
-                                        delay: 0.2
-                                    }}
-                                >Log in as Restaurant</motion.div>
-                            </motion.div>
-                        )
-                    }
-                </AnimatePresence>
-                <div className='flex flex-col items-center justify-center w-full h-full px-4 gap-5'>
-                    {
-                        role === 'ADMIN' && (
-                            <div className='flex flex-col items-center justify-center w-full h-full gap-4 text-white'>
-                                <h1 className='text-2xl font-bold mb-7'>Admin Login</h1>
-                                <form onSubmit={handleSubmit(handleLogin)} className='w-full max-w-sm flex flex-col items-center justify-center gap-4'>
-                                    <div className='flex flex-col w-full gap-1'>
-                                        <label htmlFor="email" className='self-start font-bold'>Email : </label>
-                                        <input type="email" placeholder='Email' id='email' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-white transition-all duration-300 text-white' {...register('email')} />
-                                    </div>
-                                    <div className='flex flex-col w-full gap-1'>
-                                        <label htmlFor="password" className='self-start font-bold'>Password : </label>
-                                        <input type="password" placeholder='Password' id='password' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-white transition-all duration-300 text-white' {...register('password')} />
-                                    </div>
-                                    {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
-                                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
-                                    <button type='submit' className='w-full max-w-3/4  h-10 rounded-md bg-white text-tertiary font-bold mt-3 cursor-pointer'>Login</button>
-                                </form>
-                            </div>
-                        )
-                    }
-                    {
-                        role === 'RESTAURANT' && (
-                            <div className='flex flex-col items-center justify-center w-full h-full gap-4 text-tertiary'>
-                                <h1 className='text-2xl font-bold mb-7'>Restaurant Login</h1>
-                                <form onSubmit={handleSubmit(handleLogin)} className='w-full max-w-sm flex flex-col items-center justify-center gap-4'>
-                                    <div className='flex flex-col w-full gap-1'>
-                                        <label htmlFor="email" className='self-start font-bold'>Email : </label>
-                                        <input type="email" placeholder='Email' id='email' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-tertiary transition-all duration-300 text-tertiary' {...register('email')} />
-                                    </div>
-                                    <div className='flex flex-col w-full gap-1'>
-                                        <label htmlFor="password" className='self-start font-bold'>Password : </label>
-                                        <input type="password" placeholder='Password' id='password' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-tertiary transition-all duration-300 text-tertiary' {...register('password')} />
-                                    </div>
-                                    {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
-                                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
-                                    <button type='submit' className='w-full max-w-3/4 h-10 rounded-md bg-tertiary text-white font-bold mt-3 cursor-pointer'>Login</button>
-                                </form>
-                            </div>
-                        )
-                    }
-                </div>
-            </motion.div>
-
-            {/* desktop login */}
+            {/* desktop login (refactored for smooth animation) */}
             <motion.div
                 className='hidden md:flex flex-col items-center justify-center w-full h-full'
             >
@@ -187,8 +49,9 @@ const Login = () => {
                     initial={{ backgroundColor: '#A5B68D' }}
                     animate={{ backgroundColor: role === 'ADMIN' ? '#A5B68D' : '#ffffff' }}
                     transition={{ duration: 0.3 }}
-                    className='relative h-full max-h-3/5 w-full max-w-3xl rounded-3xl  flex flex-col items-center justify-center overflow-hidden'
+                    className='relative h-full max-h-3/5 w-full max-w-3xl rounded-3xl flex flex-col items-center justify-center overflow-hidden'
                 >
+                    {/* Role switcher */}
                     <motion.div
                         initial={{ left: role !== 'ADMIN' ? '3%' : '57%', backgroundColor: role === 'ADMIN' ? '#ffffff' : '#A5B68D' }}
                         animate={{ left: role !== 'ADMIN' ? '3%' : '57%', backgroundColor: role === 'ADMIN' ? '#ffffff' : '#A5B68D' }}
@@ -201,14 +64,16 @@ const Login = () => {
                                 handleRoleChange('ADMIN')
                             }
                         }}
+                        style={{ zIndex: 3 }}
                     >
-                        <AnimatePresence>
+                        <AnimatePresence mode="wait">
                             {
                                 role === 'ADMIN' ? (
                                     <motion.div
-                                        key='admin'
+                                        key='admin-switcher'
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
                                         transition={{ duration: 0.3 }}
                                         className='w-full h-full flex flex-col items-center justify-center gap-3'
                                     >
@@ -217,9 +82,10 @@ const Login = () => {
                                     </motion.div>
                                 ) : (
                                     <motion.div
-                                        key='restaurant'
+                                        key='restaurant-switcher'
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
                                         transition={{ duration: 0.3 }}
                                         className='w-full h-full flex flex-col items-center justify-center gap-3'
                                     >
@@ -230,25 +96,28 @@ const Login = () => {
                             }
                         </AnimatePresence>
                     </motion.div>
-                    <AnimatePresence>
-                        {
-                            role === 'ADMIN' ? (
+                    {/* Animated form area */}
+                    <div className="w-full h-full flex flex-row items-center justify-center relative">
+                        <AnimatePresence mode="wait">
+                            {role === 'ADMIN' ? (
                                 <motion.div
-                                    key='admin'
-                                    initial={{ x: role === 'ADMIN' ? '-100%' : 0 }}
-                                    animate={{ x: role === 'ADMIN' ? 0 : '-100%' }}
-                                    transition={{ duration: 0.3 }}
-                                    className='w-full h-full flex flex-col items-start justify-center px-10'
+                                    key="admin-form"
+                                    initial={{ x: -400, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    exit={{ x: 400, opacity: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut", opacity: { ease: "backOut" } }}
+                                    className="w-[55%] h-full flex flex-col items-center justify-center px-10 absolute left-0 top-0"
+                                    style={{ zIndex: 2 }}
                                 >
-                                    <div className='w-[50%] h-full flex flex-col items-start justify-center '>
-                                        <form onSubmit={handleSubmit(handleLogin)} className='w-full max-w-sm flex flex-col items-center justify-center gap-4'>
+                                    <div className='w-full flex flex-col items-start justify-center '>
+                                        <form onSubmit={handleSubmit(onSubmit)} className='w-full max-w-sm flex flex-col items-center justify-center gap-4'>
                                             <div className='flex flex-col w-full gap-1'>
-                                                <label htmlFor="email" className='self-start font-bold text-white'>Email : </label>
-                                                <input type="email" placeholder='Email' id='email' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-white transition-all duration-300 text-white' {...register('email')} />
+                                                <label htmlFor="desktop-email" className='self-start font-bold text-white'>Email : </label>
+                                                <input type="email" placeholder='Email' id='desktop-email' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-white transition-all duration-300 text-white' {...register('email')} />
                                             </div>
                                             <div className='flex flex-col w-full gap-1'>
-                                                <label htmlFor="password" className='self-start font-bold text-white'>Password : </label>
-                                                <input type="password" placeholder='Password' id='password' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-white transition-all duration-300 text-white' {...register('password')} />
+                                                <label htmlFor="desktop-password" className='self-start font-bold text-white'>Password : </label>
+                                                <input type="password" placeholder='Password' id='desktop-password' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-white transition-all duration-300 text-white' {...register('password')} />
                                             </div>
                                             {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                                             {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
@@ -258,21 +127,23 @@ const Login = () => {
                                 </motion.div>
                             ) : (
                                 <motion.div
-                                    key='restaurant'
-                                    initial={{ x: role === 'RESTAURANT' ? '100%' : 0 }}
-                                    animate={{ x: role === 'RESTAURANT' ? 0 : '100%' }}
-                                    transition={{ duration: 0.3 }}
-                                    className='w-full h-full flex flex-col items-end justify-center px-10'
+                                    key="restaurant-form"
+                                    initial={{ x: 400, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    exit={{ x: -400, opacity: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut", opacity: { ease: "backOut" } }}
+                                    className="w-[55%] h-full flex flex-col items-center justify-center px-10 absolute right-0 top-0"
+                                    style={{ zIndex: 2 }}
                                 >
-                                    <div className='w-[50%] h-full flex flex-col items-start justify-center '>
-                                        <form onSubmit={handleSubmit(handleLogin)} className='w-full max-w-sm flex flex-col items-center justify-center gap-4'>
+                                    <div className='w-full flex flex-col items-start justify-center '>
+                                        <form onSubmit={handleSubmit(onSubmit)} className='w-full max-w-sm flex flex-col items-center justify-center gap-4'>
                                             <div className='flex flex-col w-full gap-1'>
-                                                <label htmlFor="email" className='self-start font-bold text-tertiary'>Email : </label>
-                                                <input type="email" placeholder='Email' id='email' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-tertiary transition-all duration-300 text-tertiary' {...register('email')} />
+                                                <label htmlFor="desktop-email" className='self-start font-bold text-tertiary'>Email : </label>
+                                                <input type="email" placeholder='Email' id='desktop-email' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-tertiary transition-all duration-300 text-tertiary' {...register('email')} />
                                             </div>
                                             <div className='flex flex-col w-full gap-1'>
-                                                <label htmlFor="password" className='self-start font-bold text-tertiary'>Password : </label>
-                                                <input type="password" placeholder='Password' id='password' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-tertiary transition-all duration-300 text-tertiary' {...register('password')} />
+                                                <label htmlFor="desktop-password" className='self-start font-bold text-tertiary'>Password : </label>
+                                                <input type="password" placeholder='Password' id='desktop-password' className='w-full h-10 rounded-md border border-quaternary p-2 focus:outline-none focus:border-tertiary transition-all duration-300 text-tertiary' {...register('password')} />
                                             </div>
                                             {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                                             {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
@@ -280,9 +151,9 @@ const Login = () => {
                                         </form>
                                     </div>
                                 </motion.div>
-                            )
-                        }
-                    </AnimatePresence>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </motion.div>
             </motion.div>
         </div>

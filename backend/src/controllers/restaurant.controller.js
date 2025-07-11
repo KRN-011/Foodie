@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 // register restaurant
 export const registerRestaurant = async (req, res) => {
     try {
-        const { name, email, password, description, logo } = req.body;
+        const { username, name, email, password, description, logo } = req.body;
 
         const existingRestaurant = await prisma.user.findUnique({
             where: { email },
@@ -22,6 +22,7 @@ export const registerRestaurant = async (req, res) => {
 
         const newRestaurant = await prisma.user.create({
             data: {
+                username,
                 email,
                 hashedPassword,
                 role: 'RESTAURANT',

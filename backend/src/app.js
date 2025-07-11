@@ -18,6 +18,7 @@ import addressRoutes from "./routers/address.route.js";
 import orderRoutes from "./routers/order.routes.js";
 import miscellaneousRoutes from "./routers/miscellaneous.route.js";
 import devRoutes from "./routers/dev.routes.js";
+import combinedRoutes from "./routers/combined.route.js";
 
 
 
@@ -55,5 +56,6 @@ app.use("/api/address", addressRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/miscellaneous", miscellaneousRoutes);
 app.use("/api/dev", devRoutes);
+app.use("/api/combined", combinedRoutes);
 
 export default app;

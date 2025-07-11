@@ -5,6 +5,7 @@ import App from './App.tsx'
 import CustomToaster from './components/CustomToaster.tsx'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { UserProvider } from './contexts/userContext.tsx'
+import './styles/components.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

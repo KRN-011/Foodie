@@ -18,7 +18,7 @@ const App = () => {
   const isSidebarVisible = !hideSidebarRoutes.includes(location.pathname);
 
   return (
-    <div className="flex flex-1 h-full min-h-screen">
+    <div className="flex flex-1 h-full w-full font-saira">
       {isSidebarVisible && <Sidebar />}
       <div className="flex-1 flex flex-col">
         <Routes>

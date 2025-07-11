@@ -1,0 +1,27 @@
+
+
+.hamburger-before::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    border-top-left-radius: 1.5rem; /* match rounded-tl-3xl */
+    transform: translateY(100%);
+    top: 50%;
+    left: 0%;
+    box-shadow: -5px -5px 0 5px rgba(165, 182, 141, 1);
+}
+
+.hamburger-before::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    border-bottom-left-radius: 1.5rem; 
+    transform: translateY(-100%);
+    top: 0%;
+    left: 0%;
+    box-shadow: -5px 5px 0 5px rgba(165, 182, 141, 1);
+}

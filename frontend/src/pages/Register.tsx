@@ -37,6 +37,17 @@ const Register = () => {
             >
                 <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Register</h2>
                 <div className="mb-4">
+                    <label htmlFor="username" className="block mb-2" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        {...register('username', { required: 'Username is required' })}
+                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2"
+                        style={{ borderColor: 'var(--color-tertiary)', fontFamily: 'var(--font-saira)', backgroundColor: 'var(--color-light)' }}
+                    />
+                    {errors.username && <p className="text-red-500 text-sm mt-1" style={{ color: 'var(--color-error)' }}>{errors.username.message as string}</p>}
+                </div>
+                <div className="mb-4">
                     <label htmlFor="email" className="block mb-2" style={{ color: 'var(--color-dark)', fontFamily: 'var(--font-saira)' }}>Email:</label>
                     <input
                         type="email"

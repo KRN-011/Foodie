@@ -151,7 +151,7 @@ export const revokeAdmin = async (req, res) => {
 // add admin
 export const addAdmin = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, email, password } = req.body;
 
         // check if admin already exists
         const existingAdmin = await prisma.user.findUnique({
@@ -178,6 +178,7 @@ export const addAdmin = async (req, res) => {
                 role: 'ADMIN',
             },
             create: {
+                username,
                 email,
                 hashedPassword,
                 role: 'ADMIN',
@@ -255,11 +256,11 @@ export const getAllUsers = async (req, res) => {
 export const updateUserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, email, role } = req.body;
+        const { username, email, role } = req.body;
 
         const user = await prisma.user.update({
             where: { id: Number(id) },
-            data: { name, email, role },
+            data: { username, email, role },
         });
 
         res.status(200).json({
