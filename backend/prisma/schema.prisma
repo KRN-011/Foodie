@@ -28,6 +28,8 @@ model User {
   products              Product[]               @relation("ProductRestaurants")
   restaurantProfile     RestaurantProfile?
   auditLogs             AuditLog[]
+  currentlyActive       Boolean                 @default(false)
+  deleted               Boolean                 @default(false)
 }
 
 

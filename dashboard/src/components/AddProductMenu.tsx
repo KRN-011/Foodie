@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { addProduct, createCategory, updateProduct } from '../services/apiService';
 import { IoMdCloseCircle } from "react-icons/io";
 import axios from 'axios';
+import ReactDOM from 'react-dom';
 
 const PRODUCT_STATUS = [
     { value: 'ACTIVE', label: 'Active' },
@@ -334,7 +335,7 @@ const AddProductMenu = ({ open, onClose, onSave, categories, restaurants, refetc
         document.head.appendChild(style);
     }
 
-    return (
+    return ReactDOM.createPortal(
         <AnimatePresence>
             {open && (
                 <motion.div
@@ -539,7 +540,8 @@ const AddProductMenu = ({ open, onClose, onSave, categories, restaurants, refetc
                     </motion.form>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     );
 };
 

@@ -1,6 +1,12 @@
 import prisma from '../lib/prismaClient.js';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
+import { SOCKET_EVENTS } from '../constants/socketEvents.js';
+import {
+    emitOrdersInLast24Hours,
+    emitTotalRevenueInLast24Hours,
+    emitCancelledFailedOrdersInLast24Hours,
+} from '../socket/emit.js';
 
 let razorpay;
 function getRazorpayInstance() {
@@ -150,6 +156,12 @@ export const createOrder = async (req, res) => {
             });
         }
 
+        // emit active users to all connected clients
+        const io = req.app.get('io');
+        await emitOrdersInLast24Hours(io);
+        await emitTotalRevenueInLast24Hours(io);
+        await emitCancelledFailedOrdersInLast24Hours(io);
+
         res.status(201).json({
             success: true,
             order,
@@ -178,7 +190,7 @@ export const getOrdersByUserId = async (req, res) => {
                 items: {
                     include: {
                         product: true,
-                    }
+                    },
                 },
                 payment: true,
                 address: true,
@@ -198,7 +210,7 @@ export const getOrdersByUserId = async (req, res) => {
             error: error.message,
         });
     }
-}
+};
 
 // get order by order id
 export const getOrderById = async (req, res) => {
@@ -216,9 +228,9 @@ export const getOrderById = async (req, res) => {
         });
 
         if (!order || order.userId !== userId) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Order not found' 
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found',
             });
         }
 
@@ -235,7 +247,7 @@ export const getOrderById = async (req, res) => {
             error: error.message,
         });
     }
-}
+};
 
 // update order status
 export const updateOrderStatus = async (req, res) => {
@@ -254,17 +266,19 @@ export const updateOrderStatus = async (req, res) => {
 
         const order = await prisma.order.update({
             where: {
-                orderId
+                orderId,
             },
             data: {
-                status
-            }
-        })
+                status,
+            },
+        });
 
-        io.emit('orderStatusUpdated', {
+        io.emit(SOCKET_EVENTS.ORDER_STATUS_UPDATES, {
             orderId,
-            newStatus: status
-        })
+            newStatus: status,
+        });
+
+        await emitCancelledFailedOrdersInLast24Hours(io);
 
         res.status(200).json({
             success: true,
@@ -279,4 +293,4 @@ export const updateOrderStatus = async (req, res) => {
             error: error.message,
         });
     }
-}
+};

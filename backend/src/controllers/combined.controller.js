@@ -4,67 +4,81 @@ import prisma from '../lib/prismaClient.js';
 // top states
 export const getTopStates = async (req, res) => {
     try {
-        let topStates = {};
-
-        // get all states from each modules
-        const totalOrdersToday = await prisma.order.count({
+        // Fetch data directly from the database, do not emit events
+        const ordersInLast24Hours = await prisma.order.count({
             where: {
                 createdAt: {
                     gte: new Date(new Date().setHours(0, 0, 0, 0)),
-                    lte: new Date(new Date().setHours(23, 59, 59, 999)),
+                    lte: new Date(new Date().setHours(23, 59, 59, 999))
                 }
             }
-        })
+        });
 
-        topStates.totalOrdersToday = totalOrdersToday;
-
-        // revenue today
-        const ordersToday = await prisma.order.findMany({
+        const totalRevenueOrders = await prisma.order.findMany({
             where: {
                 createdAt: {
                     gte: new Date(new Date().setHours(0, 0, 0, 0)),
-                    lte: new Date(new Date().setHours(23, 59, 59, 999)),
+                    lte: new Date(new Date().setHours(23, 59, 59, 999))
                 }
             },
             include: {
-                payment: true,
+                payment: true
             }
-        })
+        });
+        const totalRevenueInLast24Hours = totalRevenueOrders.reduce((acc, order) => acc + (order.payment?.amount || 0), 0);
 
-        const totalRevenueToday = ordersToday.reduce((acc, order) => acc + (order.payment?.amount || 0), 0);
+        const cancelledFailedOrdersInLast24Hours = await prisma.order.count({
+            where: {
+                status: {
+                    in: ['CANCELLED', 'FAILED']
+                },
+                createdAt: {
+                    gte: new Date(new Date().setHours(0, 0, 0, 0)),
+                    lte: new Date(new Date().setHours(23, 59, 59, 999))
+                }
+            }
+        });
 
-        topStates.totalRevenueToday = totalRevenueToday;
-
-        // active products
         const activeProducts = await prisma.product.count({
             where: {
                 status: 'ACTIVE'
             }
-        })
+        });
 
-        topStates.activeProducts = activeProducts;
-
-        // Cancelled / failed orders
-        const cancelledOrders = await prisma.order.count({
+        const activeUsers = await prisma.user.count({
             where: {
-                status: {
-                    in: ['CANCELLED', 'FAILED']
-                }
+                currentlyActive: true,
+                role: 'USER'
             }
-        })
+        });
 
-        topStates.cancelledOrders = cancelledOrders;
+        const currentActiveRestaurants = await prisma.user.count({
+            where: {
+                currentlyActive: true,
+                role: 'RESTAURANT'
+            }
+        });
+
+        const topStates = {
+            ordersInLast24Hours,
+            totalRevenueInLast24Hours,
+            cancelledFailedOrdersInLast24Hours,
+            activeProducts,
+            activeUsers,
+            currentActiveRestaurants
+        };
 
         res.status(200).json({
             success: true,
-            data: topStates,
-            message: 'Top states fetched successfully',
-        })
+            message: "Top states fetched successfully",
+            data: topStates
+        });
+
     } catch (error) {
-        console.log("Error fetching top states: ", error);
+        console.error("Error getting top states:", error);
         res.status(500).json({
             success: false,
-            message: 'Error fetching top states',
-        })
+            message: "Internal server error"
+        });
     }
 }

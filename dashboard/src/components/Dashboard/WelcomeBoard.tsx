@@ -12,7 +12,7 @@ const WelcomeBoard = ({ user }: { user: any }) => {
                     {isAdmin ? (
                         <div className='flex flex-col items-center justify-center gap-3'>
                             <div className='text-lg'>
-                                Welcome back, <span className='font-bold'>{adminName}!</span> 
+                                Welcome back, <span className='font-bold uppercase'>{adminName}!</span> 
                             </div>
                             <div className='text-sm'>
                             👋 Here's your daily overview — manage restaurants, monitor orders, and keep everything running smoothly.

@@ -21,14 +21,14 @@ const Sidebar = () => {
 
     // Handle button fade after 1s of inactivity
     useEffect(() => {
-        if (buttonActive) {
+        if (buttonActive && !isOpen) {
             if (timerRef.current) clearTimeout(timerRef.current);
             timerRef.current = setTimeout(() => setButtonActive(false), 1000);
         }
         return () => {
             if (timerRef.current) clearTimeout(timerRef.current);
         };
-    }, [buttonActive]);
+    }, [buttonActive, isOpen]);
 
     // When menu opens, make button visible
     useEffect(() => {
@@ -112,7 +112,7 @@ const Sidebar = () => {
             </AnimatePresence>
             {/* Hamburger button, moves with sidebar and fades out after 1s */}
             <motion.div
-                className="fixed top-20 z-[99] cursor-pointer"
+                className="fixed top-24 z-[99] cursor-pointer"
                 style={{ left: isOpen ? SIDEBAR_WIDTH : 0 }}
                 animate={{ left: isOpen ? SIDEBAR_WIDTH : 0, opacity: buttonActive ? 1 : 0.5 }}
                 transition={{ ease: "easeInOut" }}

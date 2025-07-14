@@ -430,3 +430,38 @@ export const getAllAuditLogs = async (req, res) => {
         });
     }
 };
+
+// delete restaurant
+export const deleteRestaurantById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // check if restaurant exists
+        const restaurant = await prisma.user.findUnique({
+            where: { id: Number(id), role: 'RESTAURANT' },
+        });
+
+        if (!restaurant) {
+            return res.status(404).json({
+                success: false,
+                message: 'Restaurant not found',
+            });
+        }
+
+        await prisma.user.update({
+            where: { id: Number(id) },
+            data: { deleted: true },
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Restaurant deleted successfully',
+        });
+    } catch (error) {
+        console.error('Error deleting restaurant:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+        });
+    }
+}

@@ -45,7 +45,7 @@ export const createProduct = async (req, res) => {
                 categoryId: Number(categoryId),
                 featured,
                 restaurants: {
-                    connect: restaurantIds.map(id => ({ id: Number(id) })),
+                    connect: restaurantIds?.map(id => ({ id: Number(id) })) || [],
                 }
             },
         });

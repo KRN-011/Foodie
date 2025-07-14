@@ -1,5 +1,5 @@
 import express from "express";
-import { loginAdmin, logoutAdmin, getAllAdmins, revokeAdmin, addAdmin, deleteUserById, getAllUsers, getAuditLogs, getAllRestaurants, getProductsByRestaurantId, getOrdersByRestaurantId, getAllAuditLogs, updateUserById, getAllOrders } from "../controllers/admin.controller.js";
+import { loginAdmin, logoutAdmin, getAllAdmins, revokeAdmin, addAdmin, deleteUserById, getAllUsers, getAuditLogs, getAllRestaurants, getProductsByRestaurantId, getOrdersByRestaurantId, getAllAuditLogs, updateUserById, getAllOrders, deleteRestaurantById } from "../controllers/admin.controller.js";
 import { authenticateUser, checkAdmin } from "../middlewares/authentication.js";
 
 const router = express.Router();
@@ -19,6 +19,7 @@ router.get("/products/restaurant/:id", authenticateUser, checkAdmin, getProducts
 router.get("/orders", authenticateUser, checkAdmin, getAllOrders);
 router.get("/orders/restaurant/:id", authenticateUser, checkAdmin, getOrdersByRestaurantId);
 router.get("/audit-logs", authenticateUser, checkAdmin, getAllAuditLogs);
+router.delete("/delete-restaurant/:id", authenticateUser, checkAdmin, deleteRestaurantById);    
 
 
 export default router;

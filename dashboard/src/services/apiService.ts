@@ -49,7 +49,7 @@ export const getAllRestaurants = async () => {
         const response = await api.get(`${API_BASE_URL}/admin/restaurants`);
         return response.data;
     } catch (error) {
-        console.error("Error getting all products:", error);
+        console.error("Error getting all restaurants:", error);
         throw error;
     }
 }
@@ -238,7 +238,27 @@ export const getRestaurantProfile = async () => {
     }
 }
 
+// delete restaurant
+export const deleteRestaurant = async () => {
+    try {
+        const response = await api.delete(`${API_BASE_URL}/restaurant/delete`);
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting restaurant:", error);
+        throw error;
+    }
+}   
 
+// delete restaurant by id (admin)
+export const deleteRestaurantById = async (id: number) => {
+    try {
+        const response = await api.delete(`${API_BASE_URL}/admin/delete-restaurant/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting restaurant by id:", error);
+        throw error;
+    }
+}
 
 // ===========================================================
 // Order API
